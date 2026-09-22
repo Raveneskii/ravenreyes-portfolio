@@ -1,0 +1,80 @@
+# Design
+
+The visual system, and the rules that hold it. Read this before writing UI.
+
+## Direction
+
+Dark, animated, engineered. Based on the Lightswind `portfolio01` reference
+(the "peg"): near-black canvas, one bright accent, a typing hero, a rotating
+portrait, scroll reveals, and an animated mobile menu. Rebuilt as our own code
+rather than copied from the paid template.
+
+## Tokens
+
+Defined once in `src/app/globals.css` under `@theme`. Use the Tailwind
+utilities they generate — do not hardcode hex values in components.
+
+| Token | Value | Use |
+| --- | --- | --- |
+| `--color-ink` | `#0a0a0a` | page background |
+| `--color-surface` | `#111113` | cards, raised blocks |
+| `--color-surface-2` | `#17171b` | secondary surfaces |
+| `--color-line` | `#26262c` | default borders, dividers |
+| `--color-line-strong` | `#34343c` | hover borders, chips |
+| `--color-fg` | `#f4f4f5` | primary text |
+| `--color-muted` | `#a1a1aa` | body text |
+| `--color-faint` | `#71717a` | metadata, labels |
+| `--color-accent` | `#2dd4bf` | the single accent |
+| `--color-accent-deep` | `#0e6b6b` | résumé accent (print) |
+
+The accent is the teal family carried over from Raven's résumé. It is the only
+chromatic colour in the UI.
+
+## Type
+
+- **Geist Sans** (`--font-sans`) for all prose and headings.
+- **Geist Mono** (`--font-mono`) for section indices, stack tags, dates, and
+  the marquee. Mono is a label voice, never body copy.
+- Headings are tight-tracked and semibold. The hero name is the largest type on
+  the site; nothing else competes with it.
+
+## Layout
+
+- Max content width `max-w-6xl`, gutters `px-5` / `sm:px-8`.
+- Sections are separated by `border-line` rules and generous vertical rhythm
+  (`py-20` / `lg:py-28`).
+- Two-column grids collapse to one column below `lg`.
+- Section anchors carry `scroll-margin-top` so the fixed header never covers a
+  heading.
+
+## Materials
+
+- **Grid backdrop** behind the hero only: `.backdrop-grid`, masked with a radial
+  fade so it dissolves into the canvas.
+- **Cards**: `rounded-2xl`, `border-line`, `bg-surface/60`; border lightens on
+  hover. No drop shadows on the dark canvas.
+- **Portrait**: circular, with a rotating conic-gradient arc and a counter-
+  spinning dashed ring. The only place a glow is allowed.
+
+## Motion
+
+Motion is layered, never load-bearing.
+
+- **Entrance (above the fold):** the `Enter` component — pure CSS
+  (`animate-enter`), so it runs without JavaScript and is neutralised by the
+  reduced-motion media query.
+- **Reveal (below the fold):** the `Reveal` component. Content renders visible;
+  only after hydration, and only for off-screen elements, does it hide and
+  animate in. A crawler and a no-JS visitor see everything.
+- **Continuous:** the typing hero line, the floating portrait, the tool marquee,
+  and the scroll progress bar.
+- **Reduced motion:** `MotionConfig reducedMotion="user"` plus a global
+  `prefers-reduced-motion` rule. When set, every animation resolves instantly.
+
+## Accessibility
+
+- Keyboard-operable nav and menu; visible focus ring (`:focus-visible`).
+- Alt text on the portrait; decorative marks are `aria-hidden`.
+- Contrast held to AA on the dark palette; the accent is used for text only
+  where it meets contrast against `--color-ink`.
+- Colour is never the only signal.
