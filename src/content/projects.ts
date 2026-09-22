@@ -51,6 +51,32 @@ export const projects: Project[] = [
     live: { label: "luisa-and-son.vercel.app", href: "https://luisa-and-son.vercel.app" },
   },
   {
+    name: "Jet",
+    subtitle: "Architecture Portfolio",
+    year: "2026",
+    kind: "Personal Project",
+    summary:
+      "A phone-first portfolio site for an architect, replacing a 30-page Issuu flipbook with an indexable, filterable site.",
+    bullets: [
+      "Built and shipped a phone-first portfolio site for architect Julienne Brigette G. Sunga-Reyes, replacing a 30-page Issuu flipbook that carried no contact details and could not be indexed, filtered, or read outside Issuu's reader.",
+      "Built the public site end to end: a home page, a projects index with category filters, project detail pages, an about page, and a resume.",
+      "Modelled her body of work in Supabase — 5 categories, 21 projects, and 43 images in Storage — behind a schema with row-level security on every table.",
+      "Cut the site imagery out of the 30 composed source sheets with a manifest-driven build script, so every drawing and render is her own work and no baked-in template copy ever publishes.",
+    ],
+    stack: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind",
+      "Supabase",
+      "Vercel",
+    ],
+    live: {
+      label: "jet-portfolio-hazel.vercel.app",
+      href: "https://jet-portfolio-hazel.vercel.app",
+    },
+  },
+  {
     name: "GroundingMat",
     subtitle: "AI-Generated Video Ad",
     year: "2026",
