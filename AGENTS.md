@@ -44,4 +44,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   Never render `opacity: 0` on the server.
 - **One source for the résumé.** `/resume` is the document; regenerate
   `public/Raven-Reyes-Resume.pdf` from it. See `README.md`.
+- **The backdrop is decorative.** `pointer-backdrop.tsx` stays behind everything
+  (`z-index: -10`, `pointer-events: none`) and must never gate content. Motion it
+  drives is skipped under reduced-motion and on touch.
 - **Real content only.** Nothing is invented. Placeholders never ship.

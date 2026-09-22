@@ -87,8 +87,13 @@ at twice the offset.
 
 ## Materials
 
-- **Grid backdrop** behind the hero only: `.backdrop-grid`, masked with a radial
-  fade so it dissolves into the canvas.
+- **Pointer backdrop** — fixed behind the whole page, `z-index: -10`,
+  `pointer-events: none`. A faint grid that drifts opposite the cursor
+  (parallax, ±23px) and an accent glow that follows it. `--px` / `--py` are
+  normalised pointer coordinates written by `pointer-backdrop.tsx`; CSS does the
+  rest, so nothing re-renders per frame. The grid is masked to fade out toward
+  the bottom; the glow has a gentler fade so the cursor is felt everywhere.
+  Skipped for reduced-motion and coarse pointers, where it stays static.
 - **Cards**: `rounded-2xl`, `border-line`, `bg-surface/60`; border lightens on
   hover. No drop shadows on the dark canvas.
 - **Portrait**: circular, with a rotating conic-gradient arc and a counter-

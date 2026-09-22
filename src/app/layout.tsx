@@ -4,6 +4,7 @@ import "./globals.css";
 import { SITE_URL } from "@/lib/site";
 import { profile } from "@/content/profile";
 import { MotionProvider } from "@/components/motion-provider";
+import { PointerBackdrop } from "@/components/pointer-backdrop";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -84,6 +85,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-dvh bg-ink text-fg antialiased">
+        <PointerBackdrop />
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>

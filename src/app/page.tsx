@@ -58,7 +58,6 @@ export default function Home() {
             <div className="min-w-0">
               {/* Hero */}
               <section className="relative isolate">
-                <div aria-hidden className="backdrop-grid absolute inset-0 -z-10" />
                 <div className="grid items-center gap-14 pb-20 pt-32 lg:grid-cols-[1.15fr_0.85fr] lg:pb-28 lg:pt-40">
                   <div>
                     <Enter>

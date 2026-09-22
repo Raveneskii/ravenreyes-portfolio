@@ -118,13 +118,47 @@ body {
   border-radius: 4px;
 }
 
-/* Faint grid + radial glow used behind the hero. */
-.backdrop-grid {
+/* Pointer-reactive backdrop, fixed behind the whole page.
+
+   `--px` / `--py` are normalised pointer coordinates written by
+   `pointer-backdrop.tsx`. The grid drifts opposite the cursor (parallax) and the
+   accent glow follows it. The grid fades out toward the bottom so it reads as
+   depth at the top rather than noise behind dense copy; the glow keeps its own,
+   gentler fade so the cursor is felt across the whole viewport. */
+.pointer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+  --px: 0.5;
+  --py: 0.25;
+}
+
+.pointer-backdrop__grid {
+  position: absolute;
+  inset: -6%;
   background-image:
     linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
     linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
   background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
+  transform: translate3d(
+    calc((var(--px) - 0.5) * -46px),
+    calc((var(--py) - 0.5) * -46px),
+    0
+  );
+  mask-image: radial-gradient(ellipse 95% 62% at 50% 0%, #000 15%, transparent 72%);
+}
+
+.pointer-backdrop__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    560px circle at calc(var(--px) * 100%) calc(var(--py) * 100%),
+    color-mix(in oklab, var(--color-accent) 12%, transparent),
+    transparent 68%
+  );
+  mask-image: radial-gradient(ellipse 120% 95% at 50% 0%, #000 45%, transparent 100%);
 }
 
 .section-anchor {
