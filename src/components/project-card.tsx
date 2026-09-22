@@ -1,6 +1,11 @@
 import { ArrowUpRight, Play } from "lucide-react";
 import type { Project } from "@/content/projects";
 
+/* Outline by default, filled with the accent on hover — the colour change is the
+   affordance, so the link reads as a button rather than as body text. */
+const linkButton =
+  "inline-flex items-center gap-2 rounded-full border border-line-strong px-4 py-2 text-sm font-medium text-fg transition-colors duration-200 hover:border-accent hover:bg-accent hover:text-on-accent";
+
 export function ProjectCard({ project }: { project: Project }) {
   return (
     <article className="group relative flex flex-col rounded-2xl border border-line bg-surface/60 p-6 transition-colors duration-300 hover:border-line-strong sm:p-8">
@@ -42,16 +47,16 @@ export function ProjectCard({ project }: { project: Project }) {
           ))}
         </div>
 
-        <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+        <div className="mt-5 flex flex-wrap items-center gap-3">
           {project.live ? (
             <a
               href={project.live.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-medium text-accent transition-opacity hover:opacity-80"
+              className={linkButton}
             >
               {project.live.label}
-              <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+              <ArrowUpRight className="h-4 w-4" aria-hidden />
             </a>
           ) : null}
           {project.video ? (
@@ -59,9 +64,9 @@ export function ProjectCard({ project }: { project: Project }) {
               href={project.video.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 font-medium text-accent transition-opacity hover:opacity-80"
+              className={linkButton}
             >
-              <Play className="h-3.5 w-3.5" aria-hidden />
+              <Play className="h-4 w-4" aria-hidden />
               {project.video.label}
             </a>
           ) : null}
