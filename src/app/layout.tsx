@@ -60,15 +60,29 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
 };
+
+/* Runs before first paint so the correct theme is on <html> from the start and
+   there is no flash of the wrong one. Stored choice wins; otherwise the OS
+   setting decides. Kept as a string because it must not be bundled or deferred. */
+const themeScript = `(function(){try{var s=localStorage.getItem("theme");var dark=s?s==="dark":!window.matchMedia("(prefers-color-scheme: light)").matches;document.documentElement.classList.toggle("light",!dark);}catch(e){}})();`;
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable}`}
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-dvh bg-ink text-fg antialiased">
         <MotionProvider>{children}</MotionProvider>
       </body>

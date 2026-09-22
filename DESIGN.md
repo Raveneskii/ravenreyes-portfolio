@@ -14,21 +14,39 @@ rather than copied from the paid template.
 Defined once in `src/app/globals.css` under `@theme`. Use the Tailwind
 utilities they generate — do not hardcode hex values in components.
 
-| Token | Value | Use |
-| --- | --- | --- |
-| `--color-ink` | `#0a0a0a` | page background |
-| `--color-surface` | `#111113` | cards, raised blocks |
-| `--color-surface-2` | `#17171b` | secondary surfaces |
-| `--color-line` | `#26262c` | default borders, dividers |
-| `--color-line-strong` | `#34343c` | hover borders, chips |
-| `--color-fg` | `#f4f4f5` | primary text |
-| `--color-muted` | `#a1a1aa` | body text |
-| `--color-faint` | `#71717a` | metadata, labels |
-| `--color-accent` | `#2dd4bf` | the single accent |
-| `--color-accent-deep` | `#0e6b6b` | résumé accent (print) |
+| Token | Dark | Light | Use |
+| --- | --- | --- | --- |
+| `--color-ink` | `#0a0a0a` | `#fafafa` | page background |
+| `--color-surface` | `#111113` | `#ffffff` | cards, raised blocks |
+| `--color-line` | `#26262c` | `#e4e4e7` | default borders, dividers |
+| `--color-line-strong` | `#34343c` | `#d4d4d8` | hover borders, chips |
+| `--color-fg` | `#f4f4f5` | `#18181b` | primary text |
+| `--color-muted` | `#a1a1aa` | `#52525b` | body text |
+| `--color-faint` | `#71717a` | `#71717a` | metadata, labels |
+| `--color-accent` | `#2dd4bf` | `#0f766e` | the single accent |
+| `--color-on-accent` | `#04211f` | `#ffffff` | text and icons on an accent fill |
+| `--color-grid` | `rgba(255,255,255,0.04)` | `rgba(0,0,0,0.05)` | hero grid lines |
 
 The accent is the teal family carried over from Raven's résumé. It is the only
 chromatic colour in the UI.
+
+## Theme
+
+Dark is the base. Light is a `.light` class on `<html>`.
+
+- `@theme` holds the dark values; `.light` redefines the same custom properties.
+  Tailwind v4 compiles `bg-ink` to `var(--color-ink)`, so every utility flips at
+  once. **No component branches on the theme.**
+- An inline script in `layout.tsx` sets the class before first paint — stored
+  choice first, then `prefers-color-scheme`. No flash of the wrong theme.
+- The visible icon is chosen in CSS via the `light:` variant
+  (`@custom-variant light`), so it is correct before hydration.
+  `ThemeToggle` reads the class through `useSyncExternalStore` only to keep its
+  `aria-label` accurate.
+- The accent darkens on light: teal-400 clears AA on a dark canvas, but on
+  `#fafafa` it drops to ~3.6:1, so light uses teal-700.
+- The résumé sheet is deliberately theme-independent — it is a paper document, so
+  it keeps its own light palette in both themes.
 
 ## Type
 

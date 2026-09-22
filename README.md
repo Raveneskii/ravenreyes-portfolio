@@ -15,6 +15,7 @@ Live: https://ravenreyes-portfolio.vercel.app
 | Content — profile, projects, experience, skills, education | done |
 | Single animated page — hero, about, skills, work, experience, contact | done |
 | Scrollspy rail — sticky "On this page", IntersectionObserver, `aria-current` | done |
+| Dark / light theme toggle — pre-paint script, persisted, no flash | done |
 | `/resume` page + print stylesheet | done |
 | `public/Raven-Reyes-Resume.pdf` | done — generated from `/resume` |
 | SEO — metadata, Open Graph image, sitemap, robots, icon | done |

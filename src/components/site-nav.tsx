@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AnimatePresence, motion, useScroll, useMotionValueEvent } from "motion/react";
 import { Menu, X, Download } from "lucide-react";
 import { profile } from "@/content/profile";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/cn";
 
 const links = [
@@ -39,33 +40,37 @@ export function SiteNav() {
           {profile.name}
         </Link>
 
-        <div className="hidden items-center gap-7 md:flex">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-muted transition-colors hover:text-fg"
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="hidden items-center gap-7 md:flex">
+            {links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm text-muted transition-colors hover:text-fg"
+              >
+                {link.label}
+              </a>
+            ))}
+            <Link
+              href="/resume"
+              className="inline-flex items-center gap-2 rounded-full border border-line-strong px-3.5 py-1.5 text-sm text-fg transition-colors hover:border-accent hover:text-accent"
             >
-              {link.label}
-            </a>
-          ))}
-          <Link
-            href="/resume"
-            className="inline-flex items-center gap-2 rounded-full border border-line-strong px-3.5 py-1.5 text-sm text-fg transition-colors hover:border-accent hover:text-accent"
-          >
-            <Download className="h-3.5 w-3.5" aria-hidden />
-            Résumé
-          </Link>
-        </div>
+              <Download className="h-3.5 w-3.5" aria-hidden />
+              Résumé
+            </Link>
+          </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen(true)}
-          aria-label="Open menu"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line-strong text-fg md:hidden"
-        >
-          <Menu className="h-4 w-4" aria-hidden />
-        </button>
+          <ThemeToggle />
+
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-label="Open menu"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line-strong text-fg md:hidden"
+          >
+            <Menu className="h-4 w-4" aria-hidden />
+          </button>
+        </div>
       </nav>
 
       <AnimatePresence>
@@ -81,14 +86,17 @@ export function SiteNav() {
               <span className="font-mono text-sm font-semibold text-fg">
                 {profile.name}
               </span>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                aria-label="Close menu"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line-strong text-fg"
-              >
-                <X className="h-4 w-4" aria-hidden />
-              </button>
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
+                <button
+                  type="button"
+                  onClick={() => setOpen(false)}
+                  aria-label="Close menu"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-line-strong text-fg"
+                >
+                  <X className="h-4 w-4" aria-hidden />
+                </button>
+              </div>
             </div>
             <div className="flex flex-col gap-2 px-5 pt-6">
               {links.map((link, i) => (

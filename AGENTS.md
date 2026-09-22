@@ -29,6 +29,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Rules
 
 - **Read `DESIGN.md` before writing UI.** The palette and type are locked there.
+- **Never hardcode a colour.** Both themes come from the tokens in
+  `globals.css`; a literal hex will only be correct in one of them. Use
+  `text-on-accent` for text on an accent fill, and the `light:` variant when a
+  style must differ per theme.
 - **One anchor offset.** `html { scroll-padding-top }` in `globals.css` is the
   only source. `HEADER_OFFSET` in `scrollspy.tsx` must equal it. Never add
   `scroll-margin-top` to section targets — the offsets stack.

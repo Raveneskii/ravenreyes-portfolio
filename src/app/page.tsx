@@ -94,7 +94,7 @@ export default function Home() {
                       <div className="mt-9 flex flex-wrap items-center gap-3">
                         <a
                           href="#work"
-                          className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-[#04211f] transition-transform hover:-translate-y-0.5"
+                          className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-medium text-on-accent transition-transform hover:-translate-y-0.5"
                         >
                           View work
                           <ArrowDown className="h-4 w-4" aria-hidden />

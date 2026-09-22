@@ -1,17 +1,20 @@
 @import "tailwindcss";
 
+/* `light:` variant, driven by the class on <html> rather than the OS setting,
+   so components can style both themes without reading state in JS. */
+@custom-variant light (&:where(.light, .light *));
+
 @theme {
   --color-ink: #0a0a0a;
   --color-surface: #111113;
-  --color-surface-2: #17171b;
   --color-line: #26262c;
   --color-line-strong: #34343c;
   --color-fg: #f4f4f5;
   --color-muted: #a1a1aa;
   --color-faint: #71717a;
   --color-accent: #2dd4bf;
-  --color-accent-soft: #134e4a;
-  --color-accent-deep: #0e6b6b;
+  --color-on-accent: #04211f;
+  --color-grid: rgba(255, 255, 255, 0.04);
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
@@ -70,17 +73,43 @@ html {
   scroll-padding-top: 5.5rem;
 }
 
+/* Light theme.
+
+   Tailwind v4 compiles `bg-ink` to `background-color: var(--color-ink)`, so
+   redefining the same variables under this class flips every utility at once.
+   The class lives on <html> and is set before paint by the inline script in
+   `layout.tsx`; nothing else in the app needs to know which theme is active.
+
+   The accent darkens from teal-400 to teal-700 on light: the bright teal only
+   clears AA against a dark canvas, and on #fafafa it would fall to ~3.6:1. */
+.light {
+  color-scheme: light;
+  --color-ink: #fafafa;
+  --color-surface: #ffffff;
+  --color-line: #e4e4e7;
+  --color-line-strong: #d4d4d8;
+  --color-fg: #18181b;
+  --color-muted: #52525b;
+  --color-faint: #71717a;
+  --color-accent: #0f766e;
+  --color-on-accent: #ffffff;
+  --color-grid: rgba(0, 0, 0, 0.05);
+}
+
 body {
   background-color: var(--color-ink);
   color: var(--color-fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 ::selection {
   background-color: var(--color-accent);
-  color: #04211f;
+  color: var(--color-on-accent);
 }
 
 :focus-visible {
@@ -92,8 +121,8 @@ body {
 /* Faint grid + radial glow used behind the hero. */
 .backdrop-grid {
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(to right, var(--color-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-grid) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 75%);
 }
