@@ -40,12 +40,32 @@ chromatic colour in the UI.
 
 ## Layout
 
-- Max content width `max-w-6xl`, gutters `px-5` / `sm:px-8`.
+- Max content width `max-w-[1440px]`, gutters `px-5` / `sm:px-8`.
+- On `xl` and up the home page is a two-column grid: a `180px` scrollspy rail,
+  then the content. Below `xl` the rail is hidden and the content is full width.
 - Sections are separated by `border-line` rules and generous vertical rhythm
   (`py-20` / `lg:py-28`).
 - Two-column grids collapse to one column below `lg`.
-- Section anchors carry `scroll-margin-top` so the fixed header never covers a
-  heading.
+
+## Scrollspy rail
+
+`src/components/scrollspy.tsx`, mounted only on the home page, `xl` and up.
+
+- A labeled `<nav aria-label="On this page">` of same-document fragment links.
+- An `IntersectionObserver` watches each section target; the active section is
+  the last one whose top has crossed the activation line. Reading geometry in the
+  callback keeps it exact at section boundaries — `isIntersecting` alone reports
+  true when two adjacent sections merely touch.
+- Exactly one link carries `aria-current="location"` at all times.
+- The indicator is a `2px` accent bar that slides between rows, plus a stronger
+  (white, medium-weight) label. Both follow the section in view.
+- The last section is pinned when the page bottoms out, since it is too short to
+  reach the activation line.
+
+**One scroll offset, one place.** `html { scroll-padding-top }` in `globals.css`
+is the only anchor offset. `scrollspy.tsx`'s `HEADER_OFFSET` must equal it.
+Never add `scroll-margin-top` to the targets — the two stack, and sections land
+at twice the offset.
 
 ## Materials
 

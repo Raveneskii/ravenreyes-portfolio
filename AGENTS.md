@@ -29,6 +29,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Rules
 
 - **Read `DESIGN.md` before writing UI.** The palette and type are locked there.
+- **One anchor offset.** `html { scroll-padding-top }` in `globals.css` is the
+  only source. `HEADER_OFFSET` in `scrollspy.tsx` must equal it. Never add
+  `scroll-margin-top` to section targets — the offsets stack.
+- **The scrollspy must always have exactly one `aria-current="location"`.**
 - **No hardcoded colours.** Use the tokens from `globals.css`; never inline a
   hex value in a component.
 - **Motion must never hide content.** Above-the-fold uses CSS `Enter`; below-the-

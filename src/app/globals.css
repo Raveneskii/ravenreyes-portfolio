@@ -64,6 +64,9 @@
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
+  /* Anchor offset for the fixed header. The single source of that offset: the
+     scrollspy's activation band starts at the same value. Do not also set
+     scroll-margin-top on the targets, or the two stack. */
   scroll-padding-top: 5.5rem;
 }
 
@@ -96,7 +99,8 @@ body {
 }
 
 .section-anchor {
-  scroll-margin-top: 5.5rem;
+  /* Intentionally empty: anchor offset lives in `scroll-padding-top` above.
+     Keeping the class as the marker for sections the scrollspy watches. */
 }
 
 /* Thin custom scrollbar, dark theme aware. */
