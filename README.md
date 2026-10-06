@@ -1,8 +1,9 @@
 # ravenreyes-portfolio
 
-The personal portfolio of **Raven A. Reyes**, an AI Specialist. A dark, animated
-single page presenting his skills, shipped projects, and work history, plus a
-print-ready résumé that exports to PDF.
+The personal portfolio of **Raven A. Reyes** — AI Video Editor & AI Specialist.
+A dark, animated single page presenting his skills, shipped projects, and work
+history, plus a résumé that exports to two PDFs: a designed one and an ATS-plain
+one.
 
 Live: https://ravenreyes-portfolio.vercel.app
 
@@ -17,7 +18,9 @@ Live: https://ravenreyes-portfolio.vercel.app
 | Scrollspy rail — sticky "On this page", IntersectionObserver, `aria-current` | done |
 | Dark / light theme toggle — pre-paint script, persisted, no flash | done |
 | `/resume` page + print stylesheet | done |
+| `/resume/ats` plain ATS route | done — single column, no icons, standard headings |
 | `public/Raven-Reyes-Resume.pdf` | done — generated from `/resume` |
+| `public/Raven-Reyes-Resume-ATS.pdf` | done — generated from `/resume/ats` |
 | SEO — metadata, Open Graph image, sitemap, robots, icon | done |
 | Deploy to Vercel | done — auto-deploys from `main` |
 
@@ -46,37 +49,46 @@ Everything the page shows lives in `src/content/`:
 | File | Holds |
 | --- | --- |
 | `profile.ts` | name, role, tagline, about paragraphs, contact, typing lines |
-| `projects.ts` | project cards (Leadline, Luisa & Son, GroundingMat) |
+| `projects.ts` | project cards (Jet, Luisa & Son, GroundingMat, Leadline) |
 | `experience.ts` | work history |
 | `skills.ts` | skill groups |
 | `education.ts` | degree, school, year |
+| `resume.ts` | the résumé's own copy — headline, summary, skill groups, video projects. Imports the rest, so facts have one source. |
 
 Change a value there and the page, the résumé, and the metadata update
 together. Nothing else needs touching.
 
-## Regenerating the résumé PDF
+## Regenerating the résumé PDFs
 
-The `/resume` page is the single source. Its print stylesheet produces
-`public/Raven-Reyes-Resume.pdf`. To regenerate it after a content change:
+`/resume` and `/resume/ats` are the two sources. `/resume/ats` is deliberately
+plain — one column, no icons, no colour — so an ATS parser can read it. Do not
+add design to it.
 
 1. `npm run build` then `npm start` (or `npm run dev`).
-2. Print `http://localhost:3000/resume` to PDF with headers/footers off.
+2. Print each page to PDF with headers/footers off.
 
-On Windows, headless Edge does it in one step:
+On Windows, headless Edge does both in one step:
 
 ```powershell
-& "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" `
-  --headless --disable-gpu --no-pdf-header-footer `
-  --print-to-pdf="public\Raven-Reyes-Resume.pdf" `
-  "http://localhost:3000/resume"
+$edge = "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe"
+& $edge --headless --disable-gpu --no-pdf-header-footer `
+  --print-to-pdf="public\Raven-Reyes-Resume.pdf" "http://localhost:3000/resume"
+& $edge --headless --disable-gpu --no-pdf-header-footer `
+  --print-to-pdf="public\Raven-Reyes-Resume-ATS.pdf" "http://localhost:3000/resume/ats"
 ```
 
-Visitors can also just press **Print / Save as PDF** on the page.
+Visitors can also press **Print / Save as PDF** on the page.
+
+**If a build fails with `EPERM` on a `.next` path**, a stale `next` process or
+OneDrive sync is holding the folder. Kill `node` processes whose command line
+contains `next`, delete `.next`, and rebuild.
 
 ## Source material
 
-Content comes from Raven's own résumé (`../resume/resume.html`) and his notes.
-Nothing is invented — see the honesty constraint in `PRODUCT.md`.
+Content comes from Raven's own résumé, his notes, and the work he actually did.
+Nothing is invented. In particular the résumé lists **no paid clients and no ad
+metrics** — he has not had paid video work yet, and the two video projects are
+his own. Keep it that way.
 
 ## Deploy
 

@@ -42,8 +42,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - **Motion must never hide content.** Above-the-fold uses CSS `Enter`; below-the-
   fold uses `Reveal`, which renders visible and only animates after hydration.
   Never render `opacity: 0` on the server.
-- **One source for the résumé.** `/resume` is the document; regenerate
-  `public/Raven-Reyes-Resume.pdf` from it. See `README.md`.
+- **One source per résumé fact.** `/resume` (designed) and `/resume/ats` (plain)
+  both render `src/content/resume.ts`, which itself imports `experience`,
+  `education` and the projects. Regenerate **both** PDFs after a content change.
+- **Never design `/resume/ats`.** No icons, no colour, no columns, standard
+  headings, real `<ul>` lists — it has to survive an ATS parser.
 - **The backdrop is decorative.** `pointer-backdrop.tsx` stays behind everything
   (`z-index: -10`, `pointer-events: none`) and must never gate content. Motion it
   drives is skipped under reduced-motion and on touch.

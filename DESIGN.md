@@ -114,6 +114,16 @@ Motion is layered, never load-bearing.
 - **Reduced motion:** `MotionConfig reducedMotion="user"` plus a global
   `prefers-reduced-motion` rule. When set, every animation resolves instantly.
 
+## Résumé
+
+Two documents, one content source (`src/content/resume.ts`).
+
+- **`/resume`** — a white paper sheet on the dark canvas. It keeps its own light
+  palette in both themes and is exempt from the token table above.
+- **`/resume/ats`** — deliberately **outside** this design system: one column,
+  no icons, no colour, standard headings, real lists. It exists to survive an
+  applicant tracking parser. Do not style it.
+
 ## Accessibility
 
 - Keyboard-operable nav and menu; visible focus ring (`:focus-visible`).
